@@ -53,9 +53,9 @@
     // 1. Create a map object.
     var mymap = L.map('map', {
         center: [39.0399942375969, -99.58808252105388],
-        zoom: 3,
+        zoom: 5,
         maxZoom: 11,
-        minZoom: 1,
+        minZoom: 2,
         detectRetina: true // detect whether the sceen is high resolution or not.
     });
 
@@ -67,10 +67,10 @@
     var airports = null;
 
     // 4. build up a set of colors from colorbrewer's dark2 category
-    var colors = chroma.scale('Dark2').mode('lch').colors(6);
+    var colors = chroma.scale('Dark2').mode('lch').colors(4);
 
     // 5. dynamically append style classes to this page. This style classes will be used for colorize the markers.
-        for (i = 0; i < 6; i++) {
+        for (i = 0; i < 2; i++) {
             $('head').append($("<style> .marker-color-" + (i + 1).toString() + " { color: " + colors[i] + "; font-size: 15px; text-shadow: 0 0 3px #ffffff;} </style>"));
         }
 
@@ -94,14 +94,14 @@
 }).addTo(mymap);
 
         // 6. Set function for color ramp
-            colors = chroma.scale('YlOrRd').colors(5);
+            colors = chroma.scale('GnBu').colors(5);
 
-            function setColor(density) {
+            function setColor(count) {
                 var id = 0;
-                if (density > 61) { id = 4; }
-                else if (density > 46 && density <= 60) { id = 3; }
-                else if (density > 12 && density <= 45) { id = 2; }
-                else if (density > 3 &&  density <= 11) { id = 1; }
+                if (count > 32) { id = 4; }
+                else if (count > 22 && count <= 32) { id = 3; }
+                else if (count > 12 && count <= 22) { id = 2; }
+                else if (count > 2 &&  count <= 12) { id = 1; }
                 else  { id = 0; }
                 return colors[id];
             }
@@ -109,7 +109,7 @@
             // 7. Set style function that sets fill color.md property equal to airport count
             function style(feature) {
                 return {
-                    fillColor: setColor(feature.properties.CTNUM / (feature.properties.POP / 100000)),
+                    fillColor: setColor(feature.properties.count),
                     fillOpacity: 0.4,
                     weight: 2,
                     opacity: 1,
