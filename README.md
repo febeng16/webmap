@@ -9,7 +9,7 @@ To create this map, data was retrieved from:
 
 This is the [URL link](https://febeng16.github.io/webmap/index.html) to the interactive Airpoirt Web Map seen below.
 
-![alt text](https://github.com/febeng16/webmap/img/AirportWebMap.png)
+![alt text](https://febeng16.github.io/webmap/img/AirportWebMap.png)
 
 
 
