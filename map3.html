@@ -71,6 +71,37 @@
         attribution: 'Cell Tower Data &copy; HIFLD | Washington counties &copy; Washington Data & Research | Base Map &copy; CartoDB | Made By Bo Zhao'
     }).addTo(mymap);
 
+    // 6. Set function for color ramp
+    colors = chroma.scale('YlOrRd').colors(5);
+
+    function setColor(density) {
+        var id = 0;
+        if (density > 61) { id = 4; }
+        else if (density > 46 && density <= 60) { id = 3; }
+        else if (density > 12 && density <= 45) { id = 2; }
+        else if (density > 3 &&  density <= 11) { id = 1; }
+        else  { id = 0; }
+        return colors[id];
+    }
+
+    // 7. Set style function that sets fill color.md property equal to cell tower density
+    function style(feature) {
+        return {
+            fillColor: setColor(feature.properties.CTNUM / (feature.properties.POP / 100000)),
+            fillOpacity: 0.4,
+            weight: 2,
+            opacity: 1,
+            color: '#b4b4b4',
+            dashArray: '4'
+        };
+    }
+
+    // 8. Add county polygons
+    // create counties variable, and assign null to it.
+    var counties = null;
+    counties = L.geoJson.ajax("assets/wacountydata.geojson", {
+        style: style
+    }).addTo(mymap);
 </script>
 </body>
 </html>
