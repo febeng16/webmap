@@ -5,6 +5,7 @@
     <title>Cell Towers in Washington (2010)</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <style>
         html, body, #map { width: 100%; height: 100%; margin: 0; background: #fff; }
 
@@ -12,6 +13,7 @@
     line-height: 16px;
     width: 180px;
     color: #333333;
+    font-family: 'Open Sans', sans-serif;
     padding: 6px 8px;
     background: white;
     background: rgba(255,255,255,0.5);
@@ -169,7 +171,7 @@
 
   // 11. Add a legend to map
   legend.addTo(mymap);
-  
+
   // 12. Add a scale bar to map
   L.control.scale({position: 'bottomleft'}).addTo(mymap);
 
