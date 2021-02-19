@@ -32,25 +32,23 @@
     // 3. Add cell towers GeoJSON Data
     // Null variable that will hold cell tower data
     var cellTowers = null;
-    // Get GeoJSON and put on it on the map when it loads
-    cellTowers= L.geoJson.ajax("assets/celltowers.geojson",{
-        attribution: 'Cell Tower Data &copy; HIFLD | Washington counties &copy; Washington Data & Research | Base Map &copy; CartoDB | Made By Feben Alemu'
-    });
-    // Add the cellTowers to the map.
-    cellTowers.addTo(mymap);
 
     // 4. build up a set of colors from colorbrewer's dark2 category
-    var colors = chroma.scale('Set2').mode('lch').colors(13);
+    var colors = chroma.scale('Dark2').mode('lch').colors(13);
 
     // 5. dynamically append style classes to this page. This style classes will be used for colorize the markers.
     for (i = 0; i < 13; i++) {
-    $('head').append($("<style> .marker-color-" + (i + 1).toString() + " { color: " + colors[i] + "; font-size: 15px; text-shadow: 0 0 3px #ffffff;} </style>"));
-}
+        $('head').append($("<style> .marker-color-" + (i + 1).toString() + " { color: " + colors[i] + "; font-size: 15px; text-shadow: 0 0 3px #ffffff;} </style>"));
+    }
+
+    // Get GeoJSON and put on it on the map when it loads
+    cellTowers= L.geoJson.ajax("assets/celltowers.geojson", {
         // assign a function to the onEachFeature parameter of the cellTowers object.
         // Then each (point) feature will bind a popup window.
         // The content of the popup window is the value of `feature.properties.company`
         onEachFeature: function (feature, layer) {
-            layer.bindPopup(feature.properties.LOCCOUNTY);
+            layer.bindPopup(feature.properties.LICENSEE);
+            return feature.properties.LOCCOUNTY;
         },
         pointToLayer: function (feature, latlng) {
             var id = 0;
@@ -68,7 +66,9 @@
             else if (feature.properties.LICENSEE == "WESTERN SUB-RSA LIMITED PARTNERSHIP")  { id = 11; }
             else { id = 12;} // "Yakima MSA limited partnership"
             return L.marker(latlng, {icon: L.divIcon({className: 'fa fa-signal marker-color-' + (id + 1).toString() })});
-            }
+        },
+        attribution: 'Cell Tower Data &copy; HIFLD | Washington counties &copy; Washington Data & Research | Base Map &copy; CartoDB | Made By Bo Zhao'
+    }).addTo(mymap);
 </script>
 </body>
 </html>
